@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class t1_신고결과받기 {
+public class 신고결과받기 {
     public static void main(String[] args) {
         // 프로그래머스 코딩테스트 연습
         // Lv1. 신고결과받기
