@@ -37,7 +37,7 @@ public class Main1260 {
 		
 	}
 	
-	// dfs´Â Àç±Í¶û stack 2°¡Áö ¹æ¹ıÀÌ ÀÖ´Ù!!!!
+	// dfsëŠ” ì¬ê·€ë‘ stack 2ê°€ì§€ ë°©ë²•ì´ ìˆë‹¤!!!!
 	private static boolean[] visited;
 	private static String DFS(boolean[][] graph, int nodenum) {
 		String resultString = nodenum + " ";
@@ -50,7 +50,7 @@ public class Main1260 {
 		return resultString;
 	}
 	
-	//bfs°¡ queue·Î ±¸Çö!!!
+	//bfsê°€ queueë¡œ êµ¬í˜„!!!
 	private static String BFS(boolean[][] graph, int startnum) {
 		Queue<Integer> queue = new LinkedList<Integer>();
 		queue.add(startnum);

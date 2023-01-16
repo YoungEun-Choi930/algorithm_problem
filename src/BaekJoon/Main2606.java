@@ -30,9 +30,9 @@ public class Main2606 {
 		while(!infection_list.isEmpty()) {
 			int node = infection_list.pop();
 			
-			if(node_list[node]) continue;	//ÀÌ¹Ì °¨¿°µÇ¾úÀ¸¸é
+			if(node_list[node]) continue;	//ì´ë¯¸ ê°ì—¼ë˜ì—ˆìœ¼ë©´
 			
-			//°¨¿° ¾ÈµÇ¾úÀ¸¸é
+			//ê°ì—¼ ì•ˆë˜ì—ˆìœ¼ë©´
 			node_list[node] = true;
 			
 			for(int i = 0 ; i <= T; i++) {

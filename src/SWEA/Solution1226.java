@@ -59,10 +59,10 @@ public class Solution1226 {
  
                 if(nx < 0 || ny < 0 || nx > 15 || ny > 15) continue;
  
-                if(input[nx][ny] == '1') continue;  //º®ÀÌ¸é ¸ø°¨
-                else if(input[nx][ny] == '3') return true;  //µµÂø
+                if(input[nx][ny] == '1') continue;  //ë²½ì´ë©´ ëª»ê°
+                else if(input[nx][ny] == '3') return true;  //ë„ì°©
  
-                if(!check[nx][ny]){ //¾È °£ ±æÀÌ¸é
+                if(!check[nx][ny]){ //ì•ˆ ê°„ ê¸¸ì´ë©´
                     check[nx][ny] = true;
                     queue.offer(new Coordinate(nx,ny));
                 }

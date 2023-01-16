@@ -1,4 +1,4 @@
-package Level2;
+package Programers.Level2;
 
 
 public class 문자열압축 {

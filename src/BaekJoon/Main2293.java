@@ -19,8 +19,8 @@ public class Main2293 {
 		
 		//solve
 		/*
-		 * 1. Àç±Í -> ½Ã°£ÃÊ°ú (top->down)
-		 * Á¦ÀÏ °¡Ä¡°¡ Å« µ¿ÀüÀ» ±âÁØÀ¸·Î ´Ù ³Ö¾úÀ»‹šºÎÅÍ -1¾¿ ÁÙÀÓ.
+		 * 1. ì¬ê·€ -> ì‹œê°„ì´ˆê³¼ (top->down)
+		 * ì œì¼ ê°€ì¹˜ê°€ í° ë™ì „ì„ ê¸°ì¤€ìœ¼ë¡œ ë‹¤ ë„£ì—ˆì„Â‹Âšë¶€í„° -1ì”© ì¤„ì„.
 		 */
 		/*
 		Arrays.sort(coin);
@@ -28,7 +28,7 @@ public class Main2293 {
 		*/
 		
 		/*
-		 * 2. Á¡È­½Ä (down->up)
+		 * 2. ì í™”ì‹ (down->up)
 		 */
 		int result = calc2(coin, K);
 		
@@ -36,28 +36,28 @@ public class Main2293 {
 	}
 	private static int calc2(int[] coin, int K) {
 		
-		int[][] chart = new int[coin.length][K+1];	//coinÀ»°¡Áö°í K¿øÀ» ¸¸µå´Â ¹æ¹ıÀÇ ¼ö
+		int[][] chart = new int[coin.length][K+1];	//coinì„ê°€ì§€ê³  Kì›ì„ ë§Œë“œëŠ” ë°©ë²•ì˜ ìˆ˜
 		
-		//0¹ø¶óÀÎ ÃÊ±âÈ­
+		//0ë²ˆë¼ì¸ ì´ˆê¸°í™”
 		int c = coin[0];
 		for(int i = 0 ; i <= K ; i++) {
 			if(i % c == 0) chart[0][i] = 1;
 			else chart[0][i] = 0;
 		}
 		
-		//´ÙÀ½¶óÀÎ
-		for(int n = 1; n < coin.length; n++) {	//n:µ¿Àü
+		//ë‹¤ìŒë¼ì¸
+		for(int n = 1; n < coin.length; n++) {	//n:ë™ì „
 			c = coin[n];
-			for(int i = 0 ; i <= K; i++) {		//i:K.¸¸µå´Â ±İ¾×
-				if(i < c) {		//ÇöÀç µ¿ÀüÀ¸·Î ¸¸µé¼ö ¾ø´Â µ·ÀÌ¸é ÀÌÀü µ¿Àü±İ¾× µé°í¿È
+			for(int i = 0 ; i <= K; i++) {		//i:K.ë§Œë“œëŠ” ê¸ˆì•¡
+				if(i < c) {		//í˜„ì¬ ë™ì „ìœ¼ë¡œ ë§Œë“¤ìˆ˜ ì—†ëŠ” ëˆì´ë©´ ì´ì „ ë™ì „ê¸ˆì•¡ ë“¤ê³ ì˜´
 					chart[n][i] = chart[n-1][i];
 					continue;
 				}
-				int cases = 0;	//¸¸µé ¼ö ÀÖ´Â °æ¿ìÀÇ ¼ö
-				int div = i / c;	//K±İ¾×¿¡¼­ ³¾ ¼ö ÀÖ´Â ÃÖ´ë ÇöÀçµ¿Àü °¹¼ö
+				int cases = 0;	//ë§Œë“¤ ìˆ˜ ìˆëŠ” ê²½ìš°ì˜ ìˆ˜
+				int div = i / c;	//Kê¸ˆì•¡ì—ì„œ ë‚¼ ìˆ˜ ìˆëŠ” ìµœëŒ€ í˜„ì¬ë™ì „ ê°¯ìˆ˜
 				
 				for(int cnt = div; cnt >= 0; cnt--) {
-					int remain = i - c*cnt;		//cµ¿ÀüÀ» cnt¸¸Å­ ³»°í ´õ ³»¾ßÇÏ´Â µ·
+					int remain = i - c*cnt;		//cë™ì „ì„ cntë§Œí¼ ë‚´ê³  ë” ë‚´ì•¼í•˜ëŠ” ëˆ
 					cases += chart[n-1][remain];
 				}
 				chart[n][i] = cases;
