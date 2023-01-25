@@ -19,12 +19,12 @@ public class Main10989 {
 		
 		StringBuilder sb = new StringBuilder();
 		
-		for(int num = 1; num < 10001 ; num++) {
+		for(int num = 0; num < 10001 ; num++) {
 			int c = countMap[num];
 			if(c == 0) continue;
 			else {
 				for(int i = 0 ; i < c; i++) {
-					sb.append(num+"\n");
+					sb.append(num).append("\n");
 				}
 			}
 		}
