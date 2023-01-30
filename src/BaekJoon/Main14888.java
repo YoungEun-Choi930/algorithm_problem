@@ -31,9 +31,9 @@ public class Main14888 {
 //			 calculate(idx, number[idx], 1);
 //		}
 		calculate(1, number[0], 1);
-		
-		System.out.println(min);
+
 		System.out.println(max);
+		System.out.println(min);
 	}
 	
 	private static int[] number;
