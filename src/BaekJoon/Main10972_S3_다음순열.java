@@ -41,7 +41,7 @@ public class Main10972_S3_다음순열 {
 		 * 경우의 수 다 저장하고 찾는다면 최악의경우 10000!.
 		 * 
 		 * 그냥 Arrays.copyOf 로 list에 넣고, list.indexOf로 찾으려고 했는데
-		 * 값이 안찾아졌다. 아마 얕은복사 때문이지 않을까
+		 * 값이 안찾아졌다. 아마 복사한 값이랑 배열 값 비교가 안되는 것 같다
 		 */
 		
 		isChecked = new boolean[N+1];
@@ -62,12 +62,20 @@ public class Main10972_S3_다음순열 {
 		else {
 			resultArray = Arrays.copyOf(array, N);
 			sortingList = new ArrayList<int[]>();
-			System.out.println(index-1);
+			//System.out.println(index-1);
 			setList(index-1);
 			
-			int result = sortingList.indexOf(array);
+			int result = -1;
+			for(int idx = 0; idx < sortingList.size(); idx++) {
+				int[] arr = sortingList.get(idx);
+				if(Arrays.equals(arr, array)) {
+					result = idx;
+					break;
+				}
+					
+			}
 			int[] resultlist = sortingList.get(result+1);
-			System.out.println(result);
+			//System.out.println(result);
 			
 			for(int i = 0 ; i < N ; i++) {
 				sb.append(resultlist[i]).append(" ");
