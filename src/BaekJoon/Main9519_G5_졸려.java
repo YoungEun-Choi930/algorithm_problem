@@ -41,7 +41,6 @@ public class Main9519_G5_졸려 {
 		
 		
 		for(int i = 0 ; i < X ; i++) {
-			back = Arrays.copyOfRange(input, start, input.length);
 			
 			int bidx = halflen-1;
 			int iidx = 0;
@@ -51,11 +50,11 @@ public class Main9519_G5_졸려 {
 				front[iidx++] = input[idx];
 			}
 			if(len%2 == 1) front[iidx] = input[input.length-1];
-			//System.out.println(Arrays.toString(front));
-			//System.out.println(Arrays.toString(back));
+			System.out.println(Arrays.toString(front));
+			System.out.println(Arrays.toString(back));
 			System.arraycopy(front, 0, input, 1, front.length);
 			System.arraycopy(back, 0, input, start, back.length);
-			//System.out.println(Arrays.toString(input));
+			System.out.println(Arrays.toString(input));
 		}
 
 		// 출력
