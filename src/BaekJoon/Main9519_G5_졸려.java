@@ -38,9 +38,15 @@ public class Main9519_G5_졸려 {
 		char[] temp = new char[input.length];
 		temp[0] = input[0];
 		
+<<<<<<< HEAD
 		int cnt = 0;
 		while(true) {
 			// 바꾸기======================================
+=======
+		
+		for(int i = 0 ; i < X ; i++) {
+			
+>>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
 			int bidx = halflen-1;
 			int iidx = 0;
 			
@@ -50,6 +56,7 @@ public class Main9519_G5_졸려 {
 			}
 			
 			if(len%2 == 1) front[iidx] = input[input.length-1];
+<<<<<<< HEAD
 			System.arraycopy(front, 0, input, 1, front.length);
 			System.arraycopy(back, 0, input, start, back.length);
 			// ===========================================
@@ -58,6 +65,13 @@ public class Main9519_G5_졸려 {
 			if(Arrays.equals(array, input)) break;
 			else if(cnt == X) break;
 			else list.add(Arrays.copyOf(input, input.length));
+=======
+			System.out.println(Arrays.toString(front));
+			System.out.println(Arrays.toString(back));
+			System.arraycopy(front, 0, input, 1, front.length);
+			System.arraycopy(back, 0, input, start, back.length);
+			System.out.println(Arrays.toString(input));
+>>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
 		}
 
 		if(cnt != X) {

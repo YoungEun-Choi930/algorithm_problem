@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main1495_S1_기타리스트 {
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
 	private static int[] volumelist;
 	private static int N, M, result;
 
@@ -25,7 +29,11 @@ public class Main1495_S1_기타리스트 {
 		for(int i = 0 ; i < N ; i++) volumelist[i] = Integer.parseInt(input[i]);
 		
 		// solve
+<<<<<<< HEAD
 		
+=======
+		/*
+>>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
 		List<Integer> pre = new ArrayList<>();
 		pre.add(S);
 		
@@ -38,16 +46,48 @@ public class Main1495_S1_기타리스트 {
 			}
 			
 			pre = cur;
+<<<<<<< HEAD
 			if(cur.isEmpty()) break;
 			System.out.print(volumelist[i]);
 			System.out.println(cur.toString());
+=======
+			if(cur.size() == 0) break;
+>>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
 		}
 		
 		int result = -1;
 		for(int vol : pre) {
 			if(result < vol) result = vol;
+<<<<<<< HEAD
 		}
 		System.out.println(result);
 		
 	}
+=======
+		}*/
+		System.out.println(result);
+		
+	}
+	
+	private static void move(int curindex, int curvolume) {
+		
+		if(curindex == N) {
+			if(curvolume > result) result = curvolume;
+			return;
+		}
+		
+		
+		int volume = volumelist[curindex];
+		if(curvolume + volume <= M) {
+			move(curindex+1, curvolume+ volume);
+		}
+		
+		if(curvolume - volume >= 0) {
+			
+			move(curindex+1, curvolume-volume);
+		}
+		
+			
+	}
+>>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
 }
