@@ -1,69 +1,74 @@
 package SWEA;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.Arrays;
 
 public class Solution5644_무선충전 {
+	
 
+	private static StringBuilder sb = new StringBuilder();
+	private static final int[][] delta = {{0,0},{0,-1},{1,0},{0,1},{-1,0}};
 	private static int[][] BC;
-	private static int ans, M, A;
-	private static final int[][] delta = {{0,0},{-1,0},{0,1},{1,0},{0,-1}};
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	private static int M, A, answer;
+
+	public static void main(String args[]) throws Exception {
+
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
 
 		int T = Integer.parseInt(br.readLine());
-		for (int tc = 1; tc <= T; tc++) {
-			// input, init
-			StringTokenizer st = new StringTokenizer(br.readLine()," ");
-			M = Integer.parseInt(st.nextToken());
-			A = Integer.parseInt(st.nextToken());
-			
-			int[] personA = new int[M];
-			int[] personB = new int[M];
-			
-			st = new StringTokenizer(br.readLine()," ");
-			for(int i = 0 ; i < M ; i++) {
-				personA[i] = Integer.parseInt(st.nextToken());
+		for (int test_case = 1; test_case <= T; test_case++) {
+			// input
+			String[] split = br.readLine().split(" ");
+			M = Integer.parseInt(split[0]);  // 총 이동시간
+			A = Integer.parseInt(split[1]);  // BC의 개수
+
+			//이동정보
+			int[] moveA = new int[M];
+			int[] moveB = new int[M];
+
+			String[] splitA = br.readLine().split(" ");
+			String[] splitB = br.readLine().split(" ");
+			for (int i = 0; i < M; i++) {
+				moveA[i] = Integer.parseInt(splitA[i]);
+				moveB[i] = Integer.parseInt(splitB[i]);
 			}
-			st = new StringTokenizer(br.readLine()," ");
-			for(int i = 0 ; i < M ; i++) {
-				personB[i] = Integer.parseInt(st.nextToken());
-			}
-			
+
+			// BC의 정보
 			BC = new int[A][4];
-			for(int i = 0 ; i < A; i++) {
-				st = new StringTokenizer(br.readLine()," ");
-				BC[i][0] = Integer.parseInt(st.nextToken());	//x
-				BC[i][1] = Integer.parseInt(st.nextToken());	//y
-				BC[i][2] = Integer.parseInt(st.nextToken());	//c
-				BC[i][3] = Integer.parseInt(st.nextToken());	//p
+			for(int i = 0 ; i < A ; i++) {
+				split = br.readLine().split(" ");
+				BC[i][0] = Integer.parseInt(split[0]);
+				BC[i][1] = Integer.parseInt(split[1]);
+				BC[i][2] = Integer.parseInt(split[2]);
+				BC[i][3] = Integer.parseInt(split[3]);
 			}
-			// ====================================================
-			// solve
-			ans = 0;
+
+			// =========================================================
+			answer = 0;
 			
+			// 출발
 			int Ax = 1, Ay = 1, Bx = 10, By = 10;
-			// 초기위치에서 확인
+
+			// 시작지점에서 확인
 			Charge(Ax, Ay, Bx, By);
-			
-			//이동하면서 확인
-			for(int time = 0 ; time < M ; time++) {
+
+			for (int time = 0; time < M; time++) {
+				//System.out.println("=====================");
 				// move
-				Ax += delta[personA[time]][0];
-				Ay += delta[personA[time]][1];
-				Bx += delta[personB[time]][0];
-				By += delta[personB[time]][1];
+				Ax += delta[moveA[time]][0];
+				Ay += delta[moveA[time]][1];
+				Bx += delta[moveB[time]][0];
+				By += delta[moveB[time]][1];
 				
-				System.out.println(time+"==move== "+Ax+","+Ay+" | "+Bx+","+By);
-				// 이동한 자리에 BC가 있는지 확인
 				Charge(Ax, Ay, Bx, By);
 			}
-			
-			sb.append("#").append(tc).append(" ").append(ans).append("\n");
+
+			// output
+			sb.append("#" + test_case + " ");
+			sb.append(answer).append("\n");
 		}
+
 		System.out.println(sb);
 	}
 	

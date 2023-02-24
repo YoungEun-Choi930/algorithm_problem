@@ -28,12 +28,14 @@ public class Solution_14510_D2_나무높이 {
             int ans = 0;
             int just1 = 0;
             int just2 = 0;
+            int start = 1;
             for(int idx = 0 ; idx < N ; idx++) {
             	int tree = trees[idx];
             	int dif = max - tree;
             	if(dif == 0) continue;
             	
             	//System.out.println("========="+dif);
+            	if(start == 2) dif--;
             	int d = dif/3 * 2;
             	//System.out.println(d);
             	ans += d;
@@ -43,12 +45,14 @@ public class Solution_14510_D2_나무높이 {
         			dif -= 2;
         			ans += 2;
         			just2++;
+        			start = 1;
         			//System.out.println("(2)");
         		}
         		if(dif == 1) {
         			dif -= 1;
         			ans += 1;
         			just1++;
+        			start = 2;
         			//System.out.println("(1)");
         		}
             }

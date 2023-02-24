@@ -4,14 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Main1495_S1_기타리스트 {
-<<<<<<< HEAD
-
-=======
-	
->>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
 	private static int[] volumelist;
 	private static int N, M, result;
 
@@ -29,16 +26,17 @@ public class Main1495_S1_기타리스트 {
 		for(int i = 0 ; i < N ; i++) volumelist[i] = Integer.parseInt(input[i]);
 		
 		// solve
-<<<<<<< HEAD
+		/*아니 미친
+		 * 실습문제로 숨바꼭질 풀면서 중복 배제해주면 풀리길래
+		 * 혹시 여기도? 해서 List ArrayList 썻던걸 Set HashSet으로 바꿔주니까 풀림
+		 * 미쳤다 ㄹㅇ 이거때문이었네 약간 어안이 벙벙한 느낌
+		 */
 		
-=======
-		/*
->>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
-		List<Integer> pre = new ArrayList<>();
+		Set<Integer> pre = new HashSet<>();
 		pre.add(S);
 		
 		for(int i = 0 ; i < N ; i++) {
-			List<Integer> cur = new ArrayList<>();
+			Set<Integer> cur = new HashSet<>();
 			
 			for(int vol : pre) {
 				if(vol+volumelist[i] <= M) cur.add(vol+volumelist[i]);
@@ -46,48 +44,16 @@ public class Main1495_S1_기타리스트 {
 			}
 			
 			pre = cur;
-<<<<<<< HEAD
-			if(cur.isEmpty()) break;
-			System.out.print(volumelist[i]);
-			System.out.println(cur.toString());
-=======
 			if(cur.size() == 0) break;
->>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
 		}
 		
 		int result = -1;
 		for(int vol : pre) {
 			if(result < vol) result = vol;
-<<<<<<< HEAD
 		}
-		System.out.println(result);
-		
-	}
-=======
-		}*/
 		System.out.println(result);
 		
 	}
 	
-	private static void move(int curindex, int curvolume) {
-		
-		if(curindex == N) {
-			if(curvolume > result) result = curvolume;
-			return;
-		}
-		
-		
-		int volume = volumelist[curindex];
-		if(curvolume + volume <= M) {
-			move(curindex+1, curvolume+ volume);
-		}
-		
-		if(curvolume - volume >= 0) {
-			
-			move(curindex+1, curvolume-volume);
-		}
-		
-			
-	}
->>>>>>> 2ca90f1d79e8cfd56296f9efdcd1721df0dded6e
+	
 }

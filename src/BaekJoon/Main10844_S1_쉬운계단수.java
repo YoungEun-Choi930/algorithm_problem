@@ -26,7 +26,7 @@ public class Main10844_S1_쉬운계단수 {
 			for(int j = 0 ; j < 10 ; j++) {
 				if(j-1>0) nextCount[j-1] += curCount[j];
 				if(j+1 < 10) nextCount[j+1] += curCount[j];
-			}
+			} 
 			cases = cases*2 -1;
 			cases %= 1_000_000_000;
 		}
