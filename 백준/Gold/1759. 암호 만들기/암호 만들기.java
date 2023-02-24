@@ -8,6 +8,7 @@ public class Main {
 	private static int L, C;
 	private static StringBuilder result;
 	private static char[] Alphabet;
+	private static char[] alpha;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,6 +22,7 @@ public class Main {
 		
 		String instr = br.readLine();
 		Alphabet = new char[C];
+		alpha = new char[L];
 		for(int i = 0 ; i < C; i++) {
 			Alphabet[i] = instr.charAt(i*2);
 		}
@@ -31,36 +33,33 @@ public class Main {
 		Arrays.sort(Alphabet);
 		
 		// 2. cCl 조합
-		Combination(0,0,0);
+		Combination(0,0,0,0);
 
 		// 출력
 		System.out.println(result);
 	}
 
 	private static final String vowel = "aeiou";
-	private static void Combination(int start, int count, int flag) {
+	private static void Combination(int start, int count, int vowelCnt, int consonatsCnt) {
 		if(count == L) {
 			// 3. 조합 다 만들어지면  모음이 하나라도 있는지 확인. 자음 2개 있는지 확인
-			StringBuilder sb = new StringBuilder();
-			int vowelCnt = 0;
-			int consonatsCnt = 0;
-			for(int i = 0 ; i < C ; i++) {
-				if((flag & 1<<i) != 0) {
-					sb.append(Alphabet[i]);
-					if(vowel.indexOf(Alphabet[i]) != -1) vowelCnt++;
-					else consonatsCnt++;
-				}
+			if(vowelCnt != 0 && consonatsCnt >= 2) {
+				for(int i = 0 ; i < L ; i++) result.append(alpha[i]);
+				result.append('\n');
 			}
-			// 모음 자음 맞으면 출력
-			if(vowelCnt != 0 && consonatsCnt >= 2) 
-				result.append(sb).append("\n");
 			return;
 		}
 		
-		for(int i = start; i < C ; i++) {
-			if((flag & 1<<i) == 0) {	// 선택되지 않은 경우
-				Combination(i+1, count+1, (flag | 1<<i));
+		for(int i = start; i < C; i++) {
+			char c = Alphabet[i];
+			alpha[count] = c;
+			if(vowel.indexOf(c) != -1) {
+				Combination(i+1, count+1,vowelCnt+1,consonatsCnt);
+			}
+			else {
+				Combination(i+1, count+1,vowelCnt,consonatsCnt+1);
 			}
 		}
+		
 	}
 }
