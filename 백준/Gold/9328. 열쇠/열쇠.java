@@ -78,22 +78,22 @@ public class Main {
 
 	private static Queue<Node> getStart() {
 		Queue<Node> queue = new ArrayDeque<>();
-		for (int j = 0; j < w; j++) {
-			if (check(map[0][j], 0, j)) {
+		for (int j = 0; j < w; j++) {	// 위 아래
+			if (checkStart(map[0][j], 0, j)) {
 				queue.offer(new Node(0, j));
 				map[0][j] = '*';
 			}
-			if (check(map[h - 1][j], h - 1, j)) {
+			if (checkStart(map[h - 1][j], h - 1, j)) {
 				queue.offer(new Node(h - 1, j));
 				map[h - 1][j] = '*';
 			}
 		}
-		for (int i = 0; i < h; i++) {
-			if (check(map[i][0], i, 0)) {
+		for (int i = 0; i < h; i++) {	// 좌 우
+			if (checkStart(map[i][0], i, 0)) {
 				queue.offer(new Node(i, 0));
 				map[i][0] = '*';
 			}
-			if (check(map[i][w - 1], i, w - 1)) {
+			if (checkStart(map[i][w - 1], i, w - 1)) {
 				queue.offer(new Node(i, w - 1));
 				map[i][w - 1] = '*';
 			}
@@ -101,34 +101,53 @@ public class Main {
 		return queue;
 	}
 
-	private static boolean check(char cur, int x, int y) {
-		if (cur == EMPTY)
-			return true;
-		else if (cur == DOC) {
-			result++;
-			return true;
-		}
+	private static boolean checkStart(char cur, int x, int y) {
 		if (cur == WALL)
 			return false;
+		else if (cur == DOC) {
+			result++;
+		}
 		else if (KEYSTART <= cur && cur <= KEYEND) {
 			keyList[cur - KEYSTART] = true;
-			return true;
-		} else if (DOORSTART <= cur && cur <= DOOREND) {
-			if(keyList[cur-DOORSTART]) return true;
-			else {
+		} 
+		else if (DOORSTART <= cur && cur <= DOOREND) {
+			if(!keyList[cur-DOORSTART]) {
 				DoorList[cur - DOORSTART] = new Door(x, y, DoorList[cur - DOORSTART]);
 				return false;
 			}
 		}
-		return false;
+		return true;
 	}
+	
+	private static int checkVisite(int dx, int dy) {
+		if (dx < 0 || dx >= h || dy < 0 || dy >= w) return -1;
+		if (map[dx][dy] == WALL) return -1;
+		
+		if (DOORSTART <= map[dx][dy] && map[dx][dy] <= DOOREND) {
+			int doorNum = map[dx][dy] - DOORSTART;
+			if (!keyList[doorNum]) { // 키가 없으면 리스트에 추가.
+				DoorList[doorNum] = new Door(dx, dy, DoorList[doorNum]);
+				return -1;
+			}
+			// else 키를 가지고 있으면 그냥 바로 방문.
+		} else if (KEYSTART <= map[dx][dy] && map[dx][dy] <= KEYEND) {
+			int keyNum = map[dx][dy] - KEYSTART;
+			keyList[keyNum] = true;	//가지고 있는 열쇠에 추가하기
+			if(DoorList[keyNum] != null) return 2;	// 이미 방문한 길 중에서 해당 문이 있으면
+		} else if (map[dx][dy] == DOC) {
+			result++;
+		}
+		
+		return 0;
+	}
+
 
 	private static void stealDoc() {
 
 		// 2. start지점 큐에 넣기. 테두리 체크
 		Queue<Node> queue = getStart();
 
-		// 3. 현재 열쇠중에 열 수 있는 문
+		// 3. 현재 문 중에서 열쇠가 있는 문 큐에 넣기.
 		for (int i = 0; i < 26; i++) {
 			if (keyList[i]) {
 				for (Door door = DoorList[i]; door != null; door = door.next) {
@@ -145,23 +164,9 @@ public class Main {
 			for (int d = 0; d < delta.length; d++) {
 				int dx = cur.x + delta[d][0];
 				int dy = cur.y + delta[d][1];
-
-				// 벽
-				if (dx < 0 || dx >= h || dy < 0 || dy >= w)
-					continue;
-				if (map[dx][dy] == WALL)
-					continue;
-
-				// 이동
-				if (DOORSTART <= map[dx][dy] && map[dx][dy] <= DOOREND) {
-					int doorNum = map[dx][dy] - DOORSTART;
-					if (!keyList[doorNum]) { // 키가 없으면 리스트에 추가.
-						DoorList[doorNum] = new Door(dx, dy, DoorList[doorNum]);
-						continue;
-					}
-					// else 키를 가지고 있으면 그냥 바로 방문.
-				} else if (KEYSTART <= map[dx][dy] && map[dx][dy] <= KEYEND) {
-					// 이미 방문한 길 중에서 해당 문이 있으면
+				
+				int cv = checkVisite(dx,dy);
+				if(cv == 2) {	// key
 					int keyNum = map[dx][dy] - KEYSTART;
 					for (Door door = DoorList[keyNum]; door != null; door = door.next) {
 						if (map[door.x][door.y] != '*') {
@@ -170,17 +175,16 @@ public class Main {
 						}
 					}
 					DoorList[keyNum] = null;
-					keyList[keyNum] = true;	//가지고 있는 열쇠에 추가하기
-				} else if (map[dx][dy] == DOC) {
-					result++;
+					// 방문처리하기
+					map[dx][dy] = '*';
+					queue.offer(new Node(dx, dy));
 				}
-
-				// 방문처리하기
-				map[dx][dy] = '*';
-				queue.offer(new Node(dx, dy));
+				else if(cv == 0) {
+					// 방문처리하기
+					map[dx][dy] = '*';
+					queue.offer(new Node(dx, dy));
+				}
 			}
 		}
-
 	}
-
 }
