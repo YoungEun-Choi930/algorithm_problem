@@ -33,7 +33,6 @@ public class Main {
 	private static boolean[] keyList;
 	private static Door[] DoorList;
 	private static final char WALL = '*';
-	private static final char EMPTY = '.';
 	private static final char DOC = '$';
 	private static final char DOORSTART = 'A';
 	private static final char DOOREND = 'Z';
@@ -169,19 +168,19 @@ public class Main {
 				if(cv == 2) {	// key
 					int keyNum = map[dx][dy] - KEYSTART;
 					for (Door door = DoorList[keyNum]; door != null; door = door.next) {
-						if (map[door.x][door.y] != '*') {
-							map[door.x][door.y] = '*';
+						if (map[door.x][door.y] != WALL) {
+							map[door.x][door.y] = WALL;
 							queue.offer(new Node(door.x, door.y));
 						}
 					}
 					DoorList[keyNum] = null;
 					// 방문처리하기
-					map[dx][dy] = '*';
+					map[dx][dy] = WALL;
 					queue.offer(new Node(dx, dy));
 				}
 				else if(cv == 0) {
 					// 방문처리하기
-					map[dx][dy] = '*';
+					map[dx][dy] = WALL;
 					queue.offer(new Node(dx, dy));
 				}
 			}
