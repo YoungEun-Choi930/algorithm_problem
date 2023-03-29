@@ -48,59 +48,29 @@ public class Main {
 
 }
 
-class Node {
-	int n;
-	Node left;
-	Node right;
-
-	public Node(int n) {
-		this.n = n;
-		left = null;
-		right = null;
-	}
-}
-
 class mQueue {
-	Node start;
-	Node end;
+	int[] arr = new int[10_000];
+	int front = 0;
+	int back = 0;
 	
 
 	public void push(int n) {
-		if (isEmpty()) {
-			Node node = new Node(n);
-			start = end = node;
-		} else {
-			Node node = new Node(n);
-			node.left = end;
-			end.right = node;
-			
-			end = node;
-		}
-		
+		arr[back++] = n;
 	}
 
 	public int pop() {
-		if (isEmpty()) return -1;
-		
-		Node s = start;
-		int n = s.n;
-		
-		start = s.right;
-		s = null;
-		
+		if(isEmpty()) return -1;
+		int n = arr[front];
+		front++;
 		return n;
 	}
 
 	public int size() {
-		int cnt = 0;
-		for(Node no = start ; no != null; no = no.right) {
-			++cnt;
-		}
-		return cnt;
+		return back - front;
 	}
 
 	private boolean isEmpty() {
-		if(start == null) return true;
+		if(front == back) return true;
 		else return false;
 	}
 	
@@ -110,16 +80,12 @@ class mQueue {
 	}
 
 	public int front() {
-		if (isEmpty())
-			return -1;
-		else
-			return start.n;
+		if (isEmpty()) return -1;
+		else return arr[front];
 	}
 
 	public int back() {
-		if (isEmpty())
-			return -1;
-		else
-			return end.n;
+		if (isEmpty()) return -1;
+		else return arr[back-1];
 	}
 }
