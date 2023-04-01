@@ -22,12 +22,7 @@ public class Main {
 			pre = cur;
 		}
 		// 배열로
-		int size = miss.size();
-		int[] arr = new int[size];
-		int i = -1;
-		for(int idx : miss) {
-			arr[++i] = idx;
-		}
+		int[] arr = miss.stream().mapToInt(Integer::intValue).toArray();
 		
 		// Question
 		int Q = Integer.parseInt(br.readLine());
@@ -41,7 +36,7 @@ public class Main {
 			int count = 0;
 			int find = Arrays.binarySearch(arr, start);
 			if(find < 0) find = find * -1 -1;
-			for(int idx = find ; idx < size && arr[idx] < end; idx++) {
+			for(int idx = find ; idx < arr.length && arr[idx] < end; idx++) {
 				count++;
 			}
 			
