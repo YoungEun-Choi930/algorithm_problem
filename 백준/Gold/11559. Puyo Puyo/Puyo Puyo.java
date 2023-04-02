@@ -56,7 +56,7 @@ public class Main {
 		for(int i = 0 ; i < 12; i++) {
 			for(int j = 0 ; j < 6; j++) {
 				if(map[i][j] != EMPTY && !visited[i][j]) {
-					if(isCombo(i,j)) count++;
+					if(isCombo(i,j)) count++;	// bfs해서 4개 터지는지.
 				}
 			}
 		}
@@ -70,13 +70,14 @@ public class Main {
 		int count = 1;
 		int idx = 0;
 		
-		List<int[]> list = new ArrayList<>();
+		List<int[]> list = new ArrayList<>();	// 큐 대신 리스트. 4개 되면 지울라고.
 		list.add(new int[] {i,j});
 		visited[i][j] = true;
 		
 		while(idx < count) {
 			int[] cur = list.get(idx++);
 			
+			// 4방탐색
 			for(int d = 0 ; d < 4; d++) {
 				int dx = cur[0] + delta[d][0];
 				int dy = cur[1] + delta[d][1];
@@ -92,16 +93,19 @@ public class Main {
 			}
 		}
 		
-		
+		// 콤보면 map에서 없애기.
 		if(idx >= 4) {
-			
-			for(int[] p : list) {
-				map[p[0]][p[1]] = '.';
-			}
+			remove(list);
 			return true;
 		}
 		
 		return false;
+	}
+	
+	private static void remove(List<int[]> list) {
+		for(int[] p : list) {
+			map[p[0]][p[1]] = EMPTY;
+		}
 	}
 	
 	
