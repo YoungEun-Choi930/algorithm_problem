@@ -8,4 +8,3 @@
 - Programers
 - BeackJoon
 - SWEA
-- a
