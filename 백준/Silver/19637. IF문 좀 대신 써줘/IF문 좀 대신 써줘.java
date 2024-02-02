@@ -26,38 +26,27 @@ public class Main {
         int N = Integer.parseInt(in[0]);
         int M = Integer.parseInt(in[1]);
 
-        List<Name> names = new ArrayList<>();
-        HashSet<Integer> checkduplicate = new HashSet<>();
+        Name[] names = new Name[N];
 
         for(int i = 0 ; i < N ; i++) {
             in = br.readLine().split(" ");
-            int m = Integer.parseInt(in[1]);
-            if(!checkduplicate.contains(m)) {
-                checkduplicate.add(m);
-                Name n = new Name(in[0], m);
-                names.add(n);
-            }
+            Name n = new Name(in[0], Integer.parseInt(in[1]));
+            names[i] = n;
+            if(i!=0 && names[i].max == names[i-1].max) names[i].name = names[i-1].name;
         }
 
-        Collections.sort(names);
-        // list to arr
-        int s = 0;
-        Name[] arr = new Name[names.size()];
-        for(Name n : names) {
-            arr[s++] = n;
-        }
         StringBuilder sb = new StringBuilder();
 
         for(int i = 0 ; i < M ; i++) {
             int num = Integer.parseInt(br.readLine());
             Name comp = new Name("", num);
-            int n = Arrays.binarySearch(arr,comp);
+            int n = Arrays.binarySearch(names,comp);
 
             if(n < 0) {
                 n *= (-1);
                 n--;
             }
-            sb.append(arr[n].name).append("\n");
+            sb.append(names[n].name).append("\n");
         }
         System.out.println(sb);
     }
