@@ -1,36 +1,34 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int N, K;
-    static int data[];
-    static Map<Integer, Long> map = new HashMap<>();
-    static StringTokenizer st;
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
 
+        int[] sum = new int[N+1];
         st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
-        data = new int[N + 1];
 
-        long answer = 0;
-        st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= N; i++) {
-            data[i] = Integer.parseInt(st.nextToken()) + data[i - 1];
-            if (data[i] == K) {
-                answer++;
-            }
-            if (map.containsKey(data[i] - K))
-                answer += map.get(data[i] - K);
-            if (!map.containsKey(data[i]))
-                map.put(data[i], 1L);
-            else
-                map.put(data[i], map.get(data[i]) + 1);
+        long cnt = 0;
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = 1 ; i <= N ; i++) {
+
+            sum[i] = sum[i-1] + Integer.parseInt(st.nextToken());
+
+            if(sum[i] == K) cnt++;
+
+            // 누적합 arr[오른쪽]-arr[왼쪽]이 k인 경우
+            cnt += map.getOrDefault(sum[i]-K,0);
+            map.put(sum[i], map.getOrDefault(sum[i],0)+1);
+
         }
 
-        System.out.println(answer);
+        System.out.println(cnt);
     }
 }
