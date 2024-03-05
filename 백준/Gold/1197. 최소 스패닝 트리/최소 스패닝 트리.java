@@ -8,13 +8,11 @@ public class Main {
 
     static class Node implements Comparable<Node>{
         int a, b, value;
-        Node next;
 
-        public Node(int a, int b, int value, Node next) {
+        public Node(int a, int b, int value) {
             this.a = a;
             this.b = b;
             this.value = value;
-            this.next = next;
         }
 
         @Override
@@ -30,48 +28,40 @@ public class Main {
         int V = Integer.parseInt(in[0]);
         int E = Integer.parseInt(in[1]);
 
-        Node[] lines = new Node[V+1];
+        int[] parent = new int[V+1];
+        for(int i = 1; i <= V ; i++) parent[i] = i;
 
-        int a, b, c;
+        Queue<Node> ordered = new PriorityQueue<>();
         for(int i = 0 ; i < E ; i++) {
             in = br.readLine().split(" ");
-            a = Integer.parseInt(in[0]);
-            b = Integer.parseInt(in[1]);
-            c = Integer.parseInt(in[2]);
-
-            lines[a] = new Node(a, b, c, lines[a]);
-            lines[b] = new Node(b, a, c, lines[b]);
+            ordered.add(new Node(Integer.parseInt(in[0]), Integer.parseInt(in[1]), Integer.parseInt(in[2])));
         }
 
-        // solve
-        int cnt = 1;
+        //solve
+        int cnt = 0;
         int sumValue = 0;
-        boolean[] selected = new boolean[V+1];
-        Queue<Node> ordered = new PriorityQueue<>();
-
-        selected[1] = true;
-        Node node1 = lines[1];
-        while(node1 != null) {
-            ordered.offer(node1);
-            node1 = node1.next;
-        }
-
-        while(!ordered.isEmpty()) {
+        while(cnt < V-1) {
             Node cur = ordered.poll();
-            if(selected[cur.b]) continue;
-
-            sumValue += cur.value;
-            selected[cur.b] = true;
-            if(++cnt == V) break;
-
-            node1 = lines[cur.b];
-            while(node1 != null) {
-                if(!selected[node1.b]) ordered.offer(node1);
-                node1 = node1.next;
+            if(union(parent, cur.a, cur.b)) {
+                cnt++;
+                sumValue += cur.value;
             }
         }
 
         System.out.println(sumValue);
     }
 
+    private static int findP(int[] parent, int n) {
+        if(parent[n] == n) return n;
+        return parent[n] = findP(parent, parent[n]);
+    }
+
+    private static boolean union(int[] parent, int a, int b) {
+        int pa = findP(parent, a);
+        int pb = findP(parent, b);
+        if(pa == pb) return false;
+        else if(pb < pb) parent[pb] = parent[b] = pa;
+        else parent[pa] = parent[a] = pb;
+        return true;
+    }
 }
