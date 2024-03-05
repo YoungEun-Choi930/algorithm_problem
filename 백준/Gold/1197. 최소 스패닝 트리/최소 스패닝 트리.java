@@ -60,7 +60,7 @@ public class Main {
         int pa = findP(parent, a);
         int pb = findP(parent, b);
         if(pa == pb) return false;
-        else if(pb < pb) parent[pb] = parent[b] = pa;
+        else if(pa < pb) parent[pb] = parent[b] = pa;
         else parent[pa] = parent[a] = pb;
         return true;
     }
